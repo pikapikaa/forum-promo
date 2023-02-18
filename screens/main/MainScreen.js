@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import {  View, Animated, Dimensions } from "react-native";
+import {  View, Animated, Dimensions, StyleSheet } from "react-native";
 import axios from "axios";
 import Carousel from "../../components/main/Carousel";
 import { ExpandingDot } from "react-native-animated-pagination-dots";
@@ -35,7 +35,7 @@ const MainScreen = () => {
   };
 
   return (
-    <View>
+    <View style={styles.container}>
       <Carousel
         data={events}
         onScroll={Animated.event(
@@ -66,5 +66,12 @@ const MainScreen = () => {
     </View>
   );
 };
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    backgroundColor: 'white'
+  }
+})
 
 export default MainScreen;

@@ -10,6 +10,7 @@ import LoginScreen from "./screens/auth/LoginScreen";
 import OrdersScreen from "./screens/orders/OrdersScreen";
 import ProfileScreen from "./screens/profile/ProfileScreen";
 import MainScreen from "./screens/main/MainScreen";
+import BlablaScreen from "./screens/other/BlablaScreen";
 
 const ProfileStack = createNativeStackNavigator();
 
@@ -21,6 +22,7 @@ function ProfileStackScreen() {
         component={ProfileScreen}
         options={{
           title: "личный кабинет",
+          headerShadowVisible: false,
           headerTitle: (props) => (
             <View style={{ flex: 1, flexDirection: "row", padding: 10 }}>
               <Text
@@ -36,7 +38,11 @@ function ProfileStackScreen() {
           ),
         }}
       />
-      <ProfileStack.Screen name="Orders" component={OrdersScreen} />
+      <ProfileStack.Screen
+        name="Orders"
+        component={OrdersScreen}
+        options={{ headerTitle: "заявки", headerShadowVisible: false }}
+      />
     </ProfileStack.Navigator>
   );
 }
@@ -52,6 +58,7 @@ export default function App() {
             screenOptions={({ route }) => ({
               tabBarActiveTintColor: "black",
               tabBarInactiveTintColor: "gray",
+              tabBarStyle: { borderTopWidth: 0 },
             })}
           >
             <Tab.Screen
@@ -62,26 +69,31 @@ export default function App() {
                 tabBarIcon: ({ color, size }) => (
                   <Ionicons name="home" color={color} size={size} />
                 ),
+                headerShadowVisible: false,
               }}
             />
             <Tab.Screen
               name="Events"
-              component={LoginScreen}
+              component={BlablaScreen}
               options={{
                 tabBarLabel: "мероприятия",
                 tabBarIcon: ({ color, size }) => (
                   <Ionicons name="event" color={color} size={size} />
                 ),
+                headerTitle: "мероприятия ",
+                headerShadowVisible: false,
               }}
             />
             <Tab.Screen
               name="Search"
-              component={OrdersScreen}
+              component={BlablaScreen}
               options={{
                 tabBarLabel: "поиск",
                 tabBarIcon: ({ color, size }) => (
                   <Ionicons name="search" color={color} size={size} />
                 ),
+                headerTitle: "поиск ",
+                headerShadowVisible: false,
               }}
             />
             <Tab.Screen

@@ -79,6 +79,7 @@ export default function OrdersScreen() {
 const styles = StyleSheet.create({
   safeContainer: {
     flex: 1,
+    backgroundColor: 'white'
   },
   container: {
     flex: 1,
