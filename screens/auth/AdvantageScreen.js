@@ -1,5 +1,12 @@
 import React, { useMemo, useRef, useState } from "react";
-import { Animated, View, StyleSheet, Dimensions, Text } from "react-native";
+import {
+  Animated,
+  View,
+  StyleSheet,
+  Dimensions,
+  Text,
+  TouchableHighlight,
+} from "react-native";
 import { BottomSheetModal } from "@gorhom/bottom-sheet";
 
 import Swiper from "react-native-swiper";
@@ -37,12 +44,13 @@ const advantages = [
 
 const AdvantageScreen = ({ bottomSheetModalRef }) => {
   const [index, setIndex] = useState(0);
+
   const snapPoints = useMemo(() => ["10%", "90%"], []);
-  const scrollX = React.useRef(new Animated.Value(0)).current;
+  const scrollX = useRef(new Animated.Value(0)).current;
   const scrollRef = useRef();
 
   const onPressTouch = () => {
-    if (index === 2) alert("exit");
+    if (index === 2) bottomSheetModalRef.current.close();
     else scrollRef.current?.scrollBy(1, true);
   };
 
@@ -86,7 +94,12 @@ const AdvantageScreen = ({ bottomSheetModalRef }) => {
                   textColor="white"
                   onPress={() => onPressTouch()}
                 />
-                <Text>пропустить</Text>
+                <TouchableHighlight
+                  onPress={() => bottomSheetModalRef.current.close()}
+                  underlayColor="transparent"
+                >
+                  <Text style={styles.grayText}>пропустить</Text>
+                </TouchableHighlight>
               </View>
             </View>
           );
@@ -132,6 +145,10 @@ const styles = StyleSheet.create({
   },
   text: {
     marginBottom: 15,
+  },
+  grayText: {
+    marginTop: 15,
+    color: "gray",
   },
 });
 
