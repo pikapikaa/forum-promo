@@ -4,9 +4,11 @@ import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import { RootSiblingParent } from "react-native-root-siblings";
 import Ionicons from "@expo/vector-icons/MaterialIcons";
-import { View, Text, Button } from "react-native";
+import { View, Text, TouchableHighlight } from "react-native";
 
 import LoginScreen from "./screens/auth/LoginScreen";
+import EventsScreen from "./screens/event/EventsScreen";
+import ArchivedEventsScreen from "./screens/event/ArchivedEventsScreen";
 import OrdersScreen from "./screens/orders/OrdersScreen";
 import ProfileScreen from "./screens/profile/ProfileScreen";
 import MainScreen from "./screens/main/MainScreen";
@@ -14,6 +16,7 @@ import BlablaScreen from "./screens/other/BlablaScreen";
 import Flower from "./components/svg/Flower";
 import Notification from "./components/svg/Notification";
 import HeartMain from "./components/svg/HeartMain";
+import Clock from "./components/ui/Clock";
 
 const ProfileStack = createNativeStackNavigator();
 
@@ -50,6 +53,41 @@ function ProfileStackScreen() {
   );
 }
 
+const EventsStack = createNativeStackNavigator();
+
+function EventsStackScreen() {
+  return (
+    <EventsStack.Navigator>
+      <EventsStack.Screen
+        name="Events"
+        component={EventsScreen}
+        options={({ navigation }) => ({
+          headerTitle: "мои мероприятия ",
+          headerShadowVisible: false,
+          headerRight: () => (
+            <TouchableHighlight
+              onPress={() => navigation.navigate("ArchivedEvents")}
+            >
+              <Clock style={{ marginRight: 10 }} />
+            </TouchableHighlight>
+          ),
+        })}
+      />
+      <EventsStack.Screen
+        name="ArchivedEvents"
+        component={ArchivedEventsScreen}
+        options={() => ({
+          headerTitle: "архив мероприятий ",
+          headerShadowVisible: false,
+          headerRight: () => (
+            <Text style={{ fontWeight: "500" }}>очистить</Text>
+          ),
+        })}
+      />
+    </EventsStack.Navigator>
+  );
+}
+
 const Tab = createBottomTabNavigator();
 
 export default function App() {
@@ -58,7 +96,7 @@ export default function App() {
       <BottomSheetModalProvider>
         <NavigationContainer>
           <Tab.Navigator
-            screenOptions={({ route }) => ({
+            screenOptions={({ route, navigation }) => ({
               tabBarActiveTintColor: "black",
               tabBarInactiveTintColor: "gray",
               tabBarStyle: { borderTopWidth: 0 },
@@ -75,7 +113,7 @@ export default function App() {
                 headerShadowVisible: false,
                 headerRight: () => (
                   <View style={{ flexDirection: "row", paddingRight: 10 }}>
-                    <Notification style={{marginRight: 10}}/>
+                    <Notification style={{ marginRight: 10 }} />
                     <HeartMain />
                   </View>
                 ),
@@ -88,16 +126,15 @@ export default function App() {
               }}
             />
             <Tab.Screen
-              name="Events"
-              component={BlablaScreen}
-              options={{
+              name="EventsMain"
+              component={EventsStackScreen}
+              options={({ navigation }) => ({
                 tabBarLabel: "мероприятия",
                 tabBarIcon: ({ color, size }) => (
                   <Ionicons name="event" color={color} size={size} />
                 ),
-                headerTitle: "мероприятия ",
-                headerShadowVisible: false,
-              }}
+                headerShown: false,
+              })}
             />
             <Tab.Screen
               name="Search"
