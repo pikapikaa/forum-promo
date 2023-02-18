@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useCallback, useRef } from "react";
+import React, { useEffect, useState } from "react";
 import axios from "axios";
 import Ionicons from "@expo/vector-icons/MaterialIcons";
 import {
@@ -13,8 +13,6 @@ import {
 import Toast from "react-native-root-toast";
 
 import Card from "../../components/ui/Card";
-import Smile from "../../components/svg/Smile";
-import AdvantageScreen from "../auth/AdvantageScreen";
 
 const menu = [
   { id: 0, name: "Мои мероприятия" },
@@ -52,15 +50,8 @@ const ProfileScreen = ({ navigation }) => {
     }
   };
 
-  const bottomSheetModalRef1 = useRef(0);
-
-  const handlePresentModalPress = useCallback(() => {
-    bottomSheetModalRef1.current?.present();
-  }, []);
-
   const onPress = (menu) => {
     if (menu.id === 1) navigation.navigate("Orders");
-    else if (menu.id === 0) handlePresentModalPress();
     else Toast.show(`Переход к экрану "${menu.name}"`);
   };
 
@@ -109,8 +100,6 @@ const ProfileScreen = ({ navigation }) => {
 
         <Ionicons name="exit-to-app" color="red" size="25" />
       </Card>
-
-      <AdvantageScreen bottomSheetModalRef={bottomSheetModalRef1} />
     </ScrollView>
   );
 };

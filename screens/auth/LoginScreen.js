@@ -15,6 +15,10 @@ export default function LoginScreen({ navigation }) {
   }, []);
   const handleSheetChanges = useCallback((index) => {}, []);
 
+  const login = () => {
+    navigation.navigate("Home");
+  };
+
   return (
     <SafeAreaView style={styles.container}>
       <Logo />
@@ -23,7 +27,7 @@ export default function LoginScreen({ navigation }) {
           title="войти через аккаунт"
           backgroundColor="#C60033"
           textColor="white"
-          onPress={() => navigation.navigate("Home")}
+          onPress={() => login()}
         />
         <View style={styles.divider}></View>
         <Button

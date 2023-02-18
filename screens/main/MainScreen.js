@@ -1,15 +1,23 @@
-import React, { useEffect, useState } from "react";
-import {  View, Animated, Dimensions, StyleSheet } from "react-native";
+import React, { useEffect, useState, useRef,useCallback } from "react";
+import { View, Animated, Dimensions, StyleSheet } from "react-native";
 import axios from "axios";
 import Carousel from "../../components/main/Carousel";
 import { ExpandingDot } from "react-native-animated-pagination-dots";
+import AdvantageScreen from "../auth/AdvantageScreen";
+
 const { height } = Dimensions.get("window");
 
 const MainScreen = () => {
   const [events, setEvents] = useState([]);
+  const bottomSheetModalRef = useRef(0);
+
+  const handlePresentModalPress = useCallback(() => {
+    bottomSheetModalRef.current?.present();
+  }, []);
 
   useEffect(() => {
     getData();
+    handlePresentModalPress();
   }, []);
 
   const scrollX = React.useRef(new Animated.Value(0)).current;
@@ -55,7 +63,6 @@ const MainScreen = () => {
           height: 10,
           borderRadius: 5,
           marginHorizontal: 5,
-          
         }}
         activeDotColor="black"
         inActiveDotColor="grey"
@@ -63,6 +70,7 @@ const MainScreen = () => {
           top: height - 250,
         }}
       />
+      <AdvantageScreen bottomSheetModalRef={bottomSheetModalRef} />
     </View>
   );
 };
@@ -70,8 +78,8 @@ const MainScreen = () => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: 'white'
-  }
-})
+    backgroundColor: "white",
+  },
+});
 
 export default MainScreen;
