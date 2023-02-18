@@ -9,7 +9,7 @@ export default function Button({
 }) {
   return (
     <TouchableHighlight onPress={onPress} underlayColor="white">
-      <View style={[styles.button, { backgroundColor }]}>
+      <View style={[styles.button, { backgroundColor }]} >
         <Text style={[styles.buttonText, { color: textColor }]}>{title}</Text>
       </View>
     </TouchableHighlight>
