@@ -8,6 +8,7 @@ import {
   StyleSheet,
   Image,
   TouchableHighlight,
+  TouchableOpacity,
 } from "react-native";
 import Toast from "react-native-root-toast";
 
@@ -102,11 +103,14 @@ const ProfileScreen = ({ navigation }) => {
       </Card>
 
       <Card style={styles.buttonContainer}>
-        <Text style={styles.exitText}>Выйти из аккаунта</Text>
+        <TouchableOpacity onPress={() => navigation.navigate("Login")}>
+          <Text style={styles.exitText}>Выйти из аккаунта</Text>
+        </TouchableOpacity>
+
         <Ionicons name="exit-to-app" color="red" size="25" />
       </Card>
 
-      <AdvantageScreen bottomSheetModalRef={bottomSheetModalRef1}/>
+      <AdvantageScreen bottomSheetModalRef={bottomSheetModalRef1} />
     </ScrollView>
   );
 };

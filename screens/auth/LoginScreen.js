@@ -6,14 +6,10 @@ import { BottomSheetModal } from "@gorhom/bottom-sheet";
 
 const WINDOW_HEIGHT = Dimensions.get("screen").height;
 
-export default function LoginScreen() {
-  // ref
+export default function LoginScreen({ navigation }) {
   const bottomSheetModalRef = useRef(0);
-
-  // variables
   const snapPoints = useMemo(() => ["10%", "32%"], []);
 
-  // callbacks
   const handlePresentModalPress = useCallback(() => {
     bottomSheetModalRef.current?.present();
   }, []);
@@ -27,6 +23,7 @@ export default function LoginScreen() {
           title="войти через аккаунт"
           backgroundColor="#C60033"
           textColor="white"
+          onPress={() => navigation.navigate("Home")}
         />
         <View style={styles.divider}></View>
         <Button
@@ -73,7 +70,6 @@ const styles = StyleSheet.create({
   contentContainer: {
     flex: 1,
     backgroundColor: "white",
-    //padding: 10,
   },
   sheetContainer: {
     shadowColor: "#000",

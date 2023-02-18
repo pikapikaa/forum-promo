@@ -66,6 +66,7 @@ function EventsStackScreen() {
           headerShadowVisible: false,
           headerRight: () => (
             <TouchableHighlight
+              underlayColor="transparent"
               onPress={() => navigation.navigate("ArchivedEvents")}
             >
               <Clock style={{ marginRight: 10 }} />
@@ -90,76 +91,95 @@ function EventsStackScreen() {
 
 const Tab = createBottomTabNavigator();
 
+function HomeTabs() {
+  return (
+    <Tab.Navigator
+      screenOptions={({ route, navigation }) => ({
+        tabBarActiveTintColor: "black",
+        tabBarInactiveTintColor: "gray",
+        tabBarStyle: { borderTopWidth: 0 },
+      })}
+    >
+      <Tab.Screen
+        name="Main"
+        component={MainScreen}
+        options={{
+          tabBarLabel: "главная",
+          tabBarIcon: ({ color, size }) => (
+            <Ionicons name="home" color={color} size={size} />
+          ),
+          headerShadowVisible: false,
+          headerRight: () => (
+            <View style={{ flexDirection: "row", paddingRight: 10 }}>
+              <Notification style={{ marginRight: 10 }} />
+              <HeartMain />
+            </View>
+          ),
+          headerLeft: () => (
+            <View style={{ paddingLeft: 10, paddingTop: 10 }}>
+              <Flower />
+            </View>
+          ),
+          headerTitle: "",
+        }}
+      />
+      <Tab.Screen
+        name="EventsMain"
+        component={EventsStackScreen}
+        options={({ navigation }) => ({
+          tabBarLabel: "мероприятия",
+          tabBarIcon: ({ color, size }) => (
+            <Ionicons name="event" color={color} size={size} />
+          ),
+          headerShown: false,
+        })}
+      />
+      <Tab.Screen
+        name="Search"
+        component={BlablaScreen}
+        options={{
+          tabBarLabel: "поиск",
+          tabBarIcon: ({ color, size }) => (
+            <Ionicons name="search" color={color} size={size} />
+          ),
+          headerTitle: "поиск ",
+          headerShadowVisible: false,
+        }}
+      />
+      <Tab.Screen
+        name="Profile"
+        component={ProfileStackScreen}
+        options={{
+          tabBarLabel: "мой профиль",
+          tabBarIcon: ({ color, size }) => (
+            <Ionicons name="circle" color={color} size={size} />
+          ),
+          headerShown: false,
+        }}
+      />
+    </Tab.Navigator>
+  );
+}
+
+const Stack = createNativeStackNavigator();
+
 export default function App() {
   return (
     <RootSiblingParent>
       <BottomSheetModalProvider>
         <NavigationContainer>
-          <Tab.Navigator
-            screenOptions={({ route, navigation }) => ({
-              tabBarActiveTintColor: "black",
-              tabBarInactiveTintColor: "gray",
-              tabBarStyle: { borderTopWidth: 0 },
-            })}
-          >
-            <Tab.Screen
-              name="Main"
-              component={MainScreen}
-              options={{
-                tabBarLabel: "главная",
-                tabBarIcon: ({ color, size }) => (
-                  <Ionicons name="home" color={color} size={size} />
-                ),
-                headerShadowVisible: false,
-                headerRight: () => (
-                  <View style={{ flexDirection: "row", paddingRight: 10 }}>
-                    <Notification style={{ marginRight: 10 }} />
-                    <HeartMain />
-                  </View>
-                ),
-                headerLeft: () => (
-                  <View style={{ paddingLeft: 10, paddingTop: 10 }}>
-                    <Flower />
-                  </View>
-                ),
-                headerTitle: "",
-              }}
+          <Stack.Navigator>
+            <Stack.Screen
+              name="Login"
+              component={LoginScreen}
+              options={{ headerShown: false }}
             />
-            <Tab.Screen
-              name="EventsMain"
-              component={EventsStackScreen}
-              options={({ navigation }) => ({
-                tabBarLabel: "мероприятия",
-                tabBarIcon: ({ color, size }) => (
-                  <Ionicons name="event" color={color} size={size} />
-                ),
-                headerShown: false,
-              })}
+            <Stack.Screen
+              name="Home"
+              component={HomeTabs}
+              options={{ headerShown: false }}
             />
-            <Tab.Screen
-              name="Search"
-              component={BlablaScreen}
-              options={{
-                tabBarLabel: "поиск",
-                tabBarIcon: ({ color, size }) => (
-                  <Ionicons name="search" color={color} size={size} />
-                ),
-                headerTitle: "поиск ",
-                headerShadowVisible: false,
-              }}
-            />
-            <Tab.Screen
-              name="Profile"
-              component={ProfileStackScreen}
-              options={{
-                tabBarLabel: "мой профиль",
-                tabBarIcon: ({ color, size }) => (
-                  <Ionicons name="circle" color={color} size={size} />
-                ),
-                headerShown: false,
-              }}
-            />
-          </Tab.Navigator>
+          </Stack.Navigator>
         </NavigationContainer>
       </BottomSheetModalProvider>
     </RootSiblingParent>
