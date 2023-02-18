@@ -4,13 +4,16 @@ import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import { RootSiblingParent } from "react-native-root-siblings";
 import Ionicons from "@expo/vector-icons/MaterialIcons";
-import { View, Text } from "react-native";
+import { View, Text, Button } from "react-native";
 
 import LoginScreen from "./screens/auth/LoginScreen";
 import OrdersScreen from "./screens/orders/OrdersScreen";
 import ProfileScreen from "./screens/profile/ProfileScreen";
 import MainScreen from "./screens/main/MainScreen";
 import BlablaScreen from "./screens/other/BlablaScreen";
+import Flower from "./components/svg/Flower";
+import Notification from "./components/svg/Notification";
+import HeartMain from "./components/svg/HeartMain";
 
 const ProfileStack = createNativeStackNavigator();
 
@@ -70,6 +73,18 @@ export default function App() {
                   <Ionicons name="home" color={color} size={size} />
                 ),
                 headerShadowVisible: false,
+                headerRight: () => (
+                  <View style={{ flexDirection: "row", paddingRight: 10 }}>
+                    <Notification style={{marginRight: 10}}/>
+                    <HeartMain />
+                  </View>
+                ),
+                headerLeft: () => (
+                  <View style={{ paddingLeft: 10, paddingTop: 10 }}>
+                    <Flower />
+                  </View>
+                ),
+                headerTitle: "",
               }}
             />
             <Tab.Screen
